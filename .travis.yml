@@ -1,5 +1,6 @@
 language: haskell
 install:
-  - npm install -g elm
+  - cabal update
+  - cabal install elm
   - elm-package install -y
 script: elm-make --warn --yes Pipeliner.elm
