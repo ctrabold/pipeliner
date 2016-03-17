@@ -1,9 +1,6 @@
 module Pipeliner where
-{-| Pipeliner implemented in Elm, using your keyboard to kickstart and demonstrate delivery pipelines
--}
 
--- MODEL
+import Html
 
--- VIEW
-
--- UPDATE
+main =
+  Html.text "Hello, Pipelines!"
