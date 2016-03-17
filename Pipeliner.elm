@@ -1,7 +1,26 @@
 module Pipeliner where
 
 import Html exposing (..)
+import Html.Attributes exposing (..)
 
+buildStep : String -> String -> Html
+buildStep title description =
+  a [ class "active step"]
+  [
+    i [ class "truck icon" ] [],
+    div [ class "content"]
+    [
+      div [ class "title"] [
+        text title
+      ],
+      div [ class "description"] [
+        text description
+      ]
+    ]
+  ]
+
+
+main : Html
 main =
   div []
   [
@@ -9,18 +28,22 @@ main =
       text "Hello, Pipelines!"
     ],
     hr [] [],
-    div []
+    div [ id "builds"]
     [
-      h2 [] [
-        text "Build #3"
+      div [ class "ui steps"]
+      [
+        buildStep "Build #3" "Build description",
+        buildStep "Build #3" "Build description"
       ],
       hr [] [],
-      h2 [] [
-        text "Build #2"
+      div [ class "ui steps"]
+      [
+        buildStep "Build #2" "Build description"
       ],
       hr [] [],
-      h2 [] [
-        text "Build #1"
+      div [ class "ui steps"]
+      [
+        buildStep "Build #1" "Build description"
       ],
       hr [] []
     ]
