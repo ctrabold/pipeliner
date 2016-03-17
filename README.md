@@ -19,7 +19,7 @@ It is single page application written in [Eml](http://elm-lang.org).
 
 # Build
 
-    elm make --yes Pipeliner.elm --output=pipeliner.js
+    elm make --yes Pipeliner.elm --output=assets/javascripts/pipeliner.js
     open index.html
 
 
@@ -28,6 +28,9 @@ It is single page application written in [Eml](http://elm-lang.org).
     elm reactor
     open http://0.0.0.0:8000/Pipeliner.elm
 
+or
+
+    http://ctrabold.github.io/pipeliner/
 
 # Ideas
 
