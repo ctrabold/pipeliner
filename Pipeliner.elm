@@ -2,6 +2,8 @@ module Pipeliner (..) where
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Signal exposing (Address)
+import StartApp.Simple as StartApp
 
 
 -- MODEL
@@ -54,8 +56,8 @@ initialModel =
   }
 
 
-stepItem : Step -> Html
-stepItem entry =
+stepItem : Address Action -> Step -> Html
+stepItem address entry =
   let
     icon =
       entry.icon ++ " icon"
@@ -77,17 +79,21 @@ stepItem entry =
       ]
 
 
-stepList : List Step -> Html
-stepList steps =
-  div
-    [ id "builds", class "pipeline-builds" ]
-    [ div [ class "ui large steps" ] (List.map stepItem steps)
-    , text " "
-    , button
-        [ class "circular ui icon button" ]
-        [ i [ class "icon plus" ] []
-        ]
-    ]
+stepList : Address Action -> List Step -> Html
+stepList address steps =
+  let
+    stepItems =
+      List.map (stepItem address) steps
+  in
+    div
+      [ id "builds", class "pipeline-builds" ]
+      [ div [ class "ui large steps" ] stepItems
+      , text " "
+      , button
+          [ class "circular ui icon button" ]
+          [ i [ class "icon plus" ] []
+          ]
+      ]
 
 
 sideBar : Html
@@ -100,11 +106,29 @@ sideBar =
 
 
 
+-- UPDATE
+
+
+type Action
+  = NoOp
+  | Add
+
+
+update action model =
+  case action of
+    NoOp ->
+      model
+
+    _ ->
+      model
+
+
+
 -- VIEW
 
 
-view : Model -> Html
-view model =
+view : Address Action -> Model -> Html
+view address model =
   div
     []
     [ h1
@@ -115,11 +139,15 @@ view model =
     , div
         [ class "pipeline-container" ]
         [ sideBar
-        , stepList model.steps
+        , stepList address model.steps
         ]
     ]
 
 
-main : Html
+main : Signal Html
 main =
-  view initialModel
+  StartApp.start
+    { model = initialModel
+    , view = view
+    , update = update
+    }
