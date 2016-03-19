@@ -33,6 +33,15 @@ or
 
     http://ctrabold.github.io/pipeliner/
 
+# Development
+
+    # Install `elm-format`
+    brew tap homebrew/devel-only; brew install --devel elm-format
+    # check code formating
+    elm-format --yes Pipeliner.elm
+    git commit
+    git push
+
 # Ideas
 
 - Use arrow keys to build the pipeline.
