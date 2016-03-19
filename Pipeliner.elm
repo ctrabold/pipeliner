@@ -3,6 +3,39 @@ module Pipeliner where
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
+-- MODEL
+
+type alias Build =
+  { code: String
+  , status: Bool
+  , id: Int
+  , steps: List BuildStep
+  }
+
+type alias BuildStep =
+  { title: String
+  , description: String
+  }
+
+type alias Model =
+  { code: String
+  , builds: List Build
+  }
+
+initialModel : Model
+initialModel =
+  { code = ""
+  , builds =
+    [
+      { id = 1
+      , code = ""
+      , status = True
+      , steps = []
+      }
+    ]
+  }
+
+
 buildStep : String -> String -> Html
 buildStep title description =
   a [ class "active step"]
@@ -20,13 +53,15 @@ buildStep title description =
   ]
 
 
-main : Html
-main =
+view : Html
+view =
   div []
   [
     h1 [] [
       text "Hello, Pipelines!"
     ],
+    textarea [ id "codepad" ] [],
+    button [ id "submit" ] [ text "Submit" ],
     hr [] [],
     div [ id "container" ] [
       div []
@@ -55,3 +90,8 @@ main =
       ]
     ]
   ]
+
+
+main : Html
+main =
+  view
