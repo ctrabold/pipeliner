@@ -27,13 +27,15 @@ type alias Stage =
   }
 
 type alias Model =
-  { code: String
+  { title: String
+  , code: String
   , stages: List Stage
   }
 
 initialModel : Model
 initialModel =
-  { code = ""
+  { title = "Hello, Pipelines!"
+  , code = ""
   , stages =
     [
       { title = "Stage 1"
@@ -83,7 +85,7 @@ view =
   div []
   [
     h1 [] [
-      text "Hello, Pipelines!"
+      text initialModel.title
     ],
     hr [] [],
     div [ class "pipeline-container"] [
