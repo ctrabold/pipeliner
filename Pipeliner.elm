@@ -52,7 +52,6 @@ buildStep title description =
     ]
   ]
 
-
 view : Html
 view =
   div []
@@ -60,16 +59,14 @@ view =
     h1 [] [
       text "Hello, Pipelines!"
     ],
-    textarea [ id "codepad" ] [],
-    button [ id "submit" ] [ text "Submit" ],
     hr [] [],
-    div [ id "container" ] [
-      div []
+    div [ class "pipeline-container"] [
+      div [ class "pipeline-sidebar" ]
       [
-        div [id "editor"] []
-      , button [ id "commit" ] [ text "Commit" ]
+        div [id "editor", class "pipeline-sidebar__editor" ] []
+      , button [ id "commit", class "ui green button inverted" ] [ text "Commit" ]
       ]
-    , div [ id "builds"]
+    , div [ id "builds", class "pipeline-builds" ]
       [
         div [ class "ui steps"]
         [

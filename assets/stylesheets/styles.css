@@ -1,0 +1,21 @@
+.pipeline-container {
+  display: flex;
+  flex: 1;
+}
+
+.pipeline-sidebar {
+  order: -1;
+  flex: 0 0 380px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.pipeline-sidebar .pipeline-sidebar__editor {
+  flex: 1;
+  margin-bottom: 5px;
+}
+
+.pipeline-builds {
+  flex: 1;
+}
