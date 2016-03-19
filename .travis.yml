@@ -3,7 +3,7 @@ node_js:
   - "4.1"
 
 install:
-  - npm install -g elm@0.16.0 http-server webpack
+  - npm install -g elm@0.16.0 http-server
   - npm install
   - elm-package install --yes
 
