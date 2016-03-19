@@ -15,17 +15,17 @@ It is single page application written in [Eml](http://elm-lang.org).
 # Installation
 
     elm package install
-    npm installl
+    npm install
 
 # Build
 
-    webpack
+    npm run build
     open index.html
 
 # Livedemo
 
     elm reactor
-    webpack --progress --colors --watch
+    npm run watch
     open http://0.0.0.0:8000/Pipeliner.elm # for debug message
 
 or
