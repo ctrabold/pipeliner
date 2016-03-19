@@ -1,6 +1,14 @@
-language: haskell
+language: node_js
+node_js:
+  - "4.1"
+
 install:
-  - cabal update
-  - cabal install elm
-  - elm package install -y
-script: elm make --warn --yes Pipeliner.elm
+  - npm install -g elm@0.16.0 http-server webpack
+  - npm install
+  - elm-package install --yes
+
+before_script:
+  - webpack
+  - http-server '.' &
+  # Wait for compilation is done.
+  - until $(curl --output /dev/null --silent --head --fail http://127.0.0.1:8080/index.html); do echo "." && sleep 1; done
