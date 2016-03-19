@@ -14,25 +14,31 @@ type Status
   | Waiting
 
 
-type alias Job =
+type alias Step =
   { code : String
   , status : Status
-  , id : Int
   , title : String
   , description : String
+  , icon : String
+  , id : Int
   }
 
 
-type alias Stage =
-  { title : String
-  , jobs : List Job
+step : String -> String -> Int -> String -> Step
+step title description id icon =
+  { code = ""
+  , status = Waiting
+  , title = title
+  , description = description
+  , icon = icon
+  , id = id
   }
 
 
 type alias Model =
   { title : String
   , code : String
-  , stages : List Stage
+  , steps : List Step
   }
 
 
@@ -40,82 +46,80 @@ initialModel : Model
 initialModel =
   { title = "Hello, Pipelines!"
   , code = ""
-  , stages =
-      [ { title = "Stage 1"
-        , jobs =
-            [ { code = ""
-              , status = Passed
-              , id = 1
-              , title = "Build 1"
-              , description = "Description"
-              }
-            ]
-        }
-      , { title = "Stage 2"
-        , jobs =
-            [ { code = ""
-              , status = Passed
-              , id = 1
-              , title = "Build 1"
-              , description = "Description"
-              }
-            ]
-        }
+  , steps =
+      [ step "Build" "Copile & Unit tests" 2 "loading setting"
+      , step "Deploy" "via SSH to DEV" 3 "send"
+      , step "Test" "Running automated UAT" 1 "unhide"
       ]
   }
 
 
-buildStep : String -> String -> Html
-buildStep title description =
-  a
-    [ class "active step" ]
-    [ i [ class "truck icon" ] []
-    , div
-        [ class "content" ]
-        [ div
-            [ class "title" ]
-            [ text title
-            ]
-        , div
-            [ class "description" ]
-            [ text description
-            ]
+stepItem : Step -> Html
+stepItem entry =
+  let
+    icon =
+      entry.icon ++ " icon"
+  in
+    a
+      [ class "inactive step" ]
+      [ i [ class icon ] []
+      , div
+          [ class "content" ]
+          [ div
+              [ class "title" ]
+              [ text entry.title
+              ]
+          , div
+              [ class "description" ]
+              [ text entry.description
+              ]
+          ]
+      ]
+
+
+stepList : List Step -> Html
+stepList steps =
+  div
+    [ id "builds", class "pipeline-builds" ]
+    [ div [ class "ui large steps" ] (List.map stepItem steps)
+    , text " "
+    , button
+        [ class "circular ui icon button" ]
+        [ i [ class "icon plus" ] []
         ]
     ]
 
 
-view : Html
-view =
+sideBar : Html
+sideBar =
+  div
+    [ class "pipeline-sidebar" ]
+    [ div [ id "editor", class "pipeline-sidebar__editor" ] []
+    , button [ id "commit", class "ui green button inverted" ] [ text "Commit" ]
+    ]
+
+
+
+-- VIEW
+
+
+view : Model -> Html
+view model =
   div
     []
     [ h1
         []
-        [ text initialModel.title
+        [ text model.title
         ]
     , hr [] []
     , div
         [ class "pipeline-container" ]
-        [ div
-            [ class "pipeline-sidebar" ]
-            [ div [ id "editor", class "pipeline-sidebar__editor" ] []
-            , button [ id "commit", class "ui green button inverted" ] [ text "Commit" ]
-            ]
-        , div
-            [ id "builds", class "pipeline-builds" ]
-            [ div
-                [ class "ui steps" ]
-                [ buildStep "Build #3" "Build description"
-                , buildStep "Build #3" "Build description"
-                ]
-            , button
-                [ class "circular ui icon button" ]
-                [ i [ class "icon plus" ] []
-                ]
-            ]
+        [ sideBar
+        , stepList model.steps
         ]
     ]
 
 
 main : Html
 main =
-  view
+  view initialModel
