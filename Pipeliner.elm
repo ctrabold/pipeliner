@@ -28,23 +28,30 @@ main =
       text "Hello, Pipelines!"
     ],
     hr [] [],
-    div [ id "builds"]
-    [
-      div [ class "ui steps"]
+    div [ id "container" ] [
+      div []
       [
-        buildStep "Build #3" "Build description",
-        buildStep "Build #3" "Build description"
-      ],
-      hr [] [],
-      div [ class "ui steps"]
+        div [id "editor"] []
+      , button [ id "commit" ] [ text "Commit" ]
+      ]
+    , div [ id "builds"]
       [
-        buildStep "Build #2" "Build description"
-      ],
-      hr [] [],
-      div [ class "ui steps"]
-      [
-        buildStep "Build #1" "Build description"
-      ],
-      hr [] []
+        div [ class "ui steps"]
+        [
+          buildStep "Build #3" "Build description",
+          buildStep "Build #3" "Build description"
+        ],
+        hr [] [],
+        div [ class "ui steps"]
+        [
+          buildStep "Build #2" "Build description"
+        ],
+        hr [] [],
+        div [ class "ui steps"]
+        [
+          buildStep "Build #1" "Build description"
+        ],
+        hr [] []
+      ]
     ]
   ]

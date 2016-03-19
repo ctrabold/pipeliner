@@ -15,18 +15,18 @@ It is single page application written in [Eml](http://elm-lang.org).
 # Installation
 
     elm package install
-
+    npm installl
 
 # Build
 
-    elm make --yes Pipeliner.elm --output=assets/javascripts/pipeliner.js
+    webpack
     open index.html
-
 
 # Livedemo
 
     elm reactor
-    open http://0.0.0.0:8000/Pipeliner.elm
+    webpack --progress --colors --watch
+    open http://0.0.0.0:8000/Pipeliner.elm # for debug message
 
 or
 

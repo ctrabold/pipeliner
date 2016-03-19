@@ -4,3 +4,5 @@ elm-stuff/
 docs/
 elm.js
 pipeliner.js
+bundle.js
+npm-debug.log

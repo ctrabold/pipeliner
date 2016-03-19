@@ -1,0 +1,24 @@
+{
+  "name": "pipeliner",
+  "version": "1.0.0",
+  "description": "WIP",
+  "main": "elm.js",
+  "dependencies": {
+    "elm-webpack-loader": "^2.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/bin/webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ctrabold/pipeliner.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ctrabold/pipeliner/issues"
+  },
+  "homepage": "https://github.com/ctrabold/pipeliner#readme"
+}
