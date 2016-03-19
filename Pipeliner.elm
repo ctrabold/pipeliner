@@ -2,6 +2,7 @@ module Pipeliner (..) where
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import Signal exposing (Address)
 import StartApp.Simple as StartApp
 
@@ -90,7 +91,7 @@ stepList address steps =
       [ div [ class "ui large steps" ] stepItems
       , text " "
       , button
-          [ class "circular ui icon button" ]
+          [ class "circular ui icon button", onClick address Add ]
           [ i [ class "icon plus" ] []
           ]
       ]
@@ -119,8 +120,17 @@ update action model =
     NoOp ->
       model
 
-    _ ->
-      model
+    Add ->
+      let
+        currentId = List.maximum (List.map .id model.steps)
+        newId = currentId
+        entryToAdd =
+          step "Buildx" "" 8 "setting"
+      in
+        { model
+          | code = ""
+          , steps = entryToAdd :: model.steps
+        }
 
 
 
