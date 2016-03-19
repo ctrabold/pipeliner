@@ -5,32 +5,58 @@ import Html.Attributes exposing (..)
 
 -- MODEL
 
-type alias Build =
+-- MODEL
+
+type Status
+  = Running
+  | Failed
+  | Passed
+  | Waiting
+
+type alias Job =
   { code: String
-  , status: Bool
+  , status: Status
   , id: Int
-  , steps: List BuildStep
+  , title: String
+  , description: String
   }
 
-type alias BuildStep =
+type alias Stage =
   { title: String
-  , description: String
+  , jobs: List Job
   }
 
 type alias Model =
   { code: String
-  , builds: List Build
+  , stages: List Stage
   }
 
 initialModel : Model
 initialModel =
   { code = ""
-  , builds =
+  , stages =
     [
-      { id = 1
-      , code = ""
-      , status = True
-      , steps = []
+      { title = "Stage 1"
+      , jobs =
+        [
+          { code = ""
+          , status = Passed
+          , id = 1
+          , title = "Build 1"
+          , description = "Description"
+          }
+        ]
+      },
+      { title = "Stage 2"
+      , jobs =
+        [
+          { code = ""
+          , status = Passed
+          , id = 1
+          , title = "Build 1"
+          , description = "Description"
+          }
+        ]
       }
     ]
   }
