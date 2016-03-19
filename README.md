@@ -9,13 +9,14 @@ It is single page application written in [Eml](http://elm-lang.org).
 
 # Requirements
 
-- elm 0.16+: `brew install elm`
+- nodejs 5.5+: `brew install node`
 
 
 # Installation
 
-    elm package install
+    npm install -g elm@0.16.0 http-server
     npm install
+    elm package install
 
 # Build
 
