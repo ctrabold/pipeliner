@@ -47,7 +47,7 @@ type alias Model =
 
 initialModel : Model
 initialModel =
-  { title = "Hello, Pipelines!"
+  { title = "Hello Pipelines!"
   , code = ""
   , steps =
       [ step "Build" "Copile & Unit tests" 2 "loading setting"
@@ -142,7 +142,7 @@ view address model =
   div
     []
     [ h1
-        []
+        [ class "page-title" ]
         [ text model.title
         ]
     , hr [] []

@@ -4,14 +4,15 @@ node_js:
   - "5.5"
 
 install:
-  - npm install -g elm@0.16.0 http-server
+  - npm install -g elm@0.16.0
   - npm install
   - elm-package install --yes
 
 before_script:
+  - export PATH=$PWD/node_modules/.bin/:$PATH
   - npm run build
   - http-server '.' &
   # Wait for compilation is done.
   - until $(curl --output /dev/null --silent --head --fail http://127.0.0.1:8080/index.html); do echo "." && sleep 1; done
 
-script: echo "No tests yet. Coming soon :)"
+script: npm run test
