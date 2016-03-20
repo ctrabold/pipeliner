@@ -8,7 +8,6 @@
     "webpack": "^1.12.14"
   },
   "devDependencies": {
-    "http-server": "^0.9.0",
     "casperjs": "1.1.0-beta5"
   },
   "scripts": {

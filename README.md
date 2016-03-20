@@ -37,8 +37,11 @@ or
 
     # Install `elm-format`
     brew tap homebrew/devel-only; brew install --devel elm-format
+    elm reactor
+    npm run build
     # check code formating
     elm-format --yes Pipeliner.elm
+    npm run test
     git commit
     git push
 
