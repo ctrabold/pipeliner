@@ -42,6 +42,7 @@ step title description id icon =
 
 type alias Model =
   { title : String
+  , description : String
   , code : String
   , steps : List Step
   }
@@ -50,6 +51,7 @@ type alias Model =
 initialModel : Model
 initialModel =
   { title = "Hello Pipelines!"
+  , description = "Example description"
   , code = ""
   , steps =
       [ step "Build" "Copile & Unit tests" 2 "loading setting"
@@ -150,8 +152,16 @@ view address model =
   div
     []
     [ h1
-        [ class "page-title" ]
-        [ text model.title
+        [ class "ui header" ]
+        [ i [ class "settings icon" ] []
+        , div
+            [ class "content" ]
+            [ text model.title
+            , div
+                [ class "sub header" ]
+                [ text model.description
+                ]
+            ]
         ]
     , hr [] []
     , div
