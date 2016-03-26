@@ -4,7 +4,9 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Signal exposing (Address)
-import StartApp.Simple as StartApp
+
+-- PORTS
+port currentCode: Signal String
 
 
 -- MODEL
@@ -113,6 +115,7 @@ sideBar =
 type Action
   = NoOp
   | Add
+  | CommitCode String
 
 
 update action model =
@@ -130,6 +133,11 @@ update action model =
         { model
           | code = ""
           , steps = entryToAdd :: model.steps
+        }
+
+    CommitCode code -> 
+        { model
+          | code = code
         }
 
 
@@ -154,10 +162,23 @@ view address model =
     ]
 
 
+-- SIGNALS
+
+inbox : Signal.Mailbox Action
+inbox =
+    Signal.mailbox NoOp
+
+
+actions : Signal Action
+actions =
+    Signal.merge inbox.signal (Signal.map CommitCode currentCode)
+
+
+model : Signal Model
+model =
+    Signal.foldp update initialModel actions
+
+
 main : Signal Html
 main =
-  StartApp.start
-    { model = initialModel
-    , view = view
-    , update = update
-    }
+    Signal.map (view inbox.address) model
