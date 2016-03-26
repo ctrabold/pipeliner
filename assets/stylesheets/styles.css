@@ -1,3 +1,7 @@
+body {
+  overflow: scroll;
+}
+
 .pipeline-container {
   display: flex;
   flex: 1;
