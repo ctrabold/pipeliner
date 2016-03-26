@@ -1,5 +1,6 @@
 module Pipeliner (..) where
 
+import Array exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
@@ -15,7 +16,7 @@ port currentCode: Signal String
 type Status
   = Running
   | Failed
-  | Passed
+  | Success
   | Waiting
 
 
@@ -29,10 +30,10 @@ type alias Step =
   }
 
 
-step : String -> String -> Int -> String -> Step
-step title description id icon =
+step : String -> String -> Int -> String -> Status -> Step
+step title description id icon status =
   { code = ""
-  , status = Waiting
+  , status = status
   , title = title
   , description = description
   , icon = icon
@@ -54,9 +55,12 @@ initialModel =
   , description = "Example description"
   , code = ""
   , steps =
-      [ step "Build" "Copile & Unit tests" 2 "loading setting"
-      , step "Deploy" "via SSH to DEV" 3 "send"
-      , step "Test" "Running automated UAT" 1 "unhide"
+      [ step "Build" "Copile & Unit tests" 1 "completed" Success
+      , step "Build" "Copile & Unit tests" 1 "loading setting" Running
+      , step "Package" "create artifact" 2 "cube" Waiting
+      , step "Deploy_DEV" "via SSH to DEV" 3 "send" Waiting
+      , step "Test_DEV" "Running automated UAT" 4 "unhide" Waiting
+      , step "Deploy_SIT" "Running automated UAT" 4 "red warning" Failed
       ]
   }
 
@@ -118,6 +122,8 @@ type Action
   = NoOp
   | Add
   | CommitCode String
+  | Remove
+  | Sort
 
 
 update action model =
@@ -125,19 +131,32 @@ update action model =
     NoOp ->
       model
 
+    Sort ->
+      { model | steps = List.sortBy .id model.steps }
+
+    Remove ->
+      { model
+        | code = ""
+        , steps = Array.toList (Array.slice 0 -1 (Array.fromList model.steps))
+      }
+
     Add ->
       let
-        currentId = List.maximum (List.map .id model.steps)
-        newId = currentId
+        currentId =
+          List.maximum (List.map .id model.steps)
+
+        newId =
+          currentId
+
         entryToAdd =
-          step "Buildx" "" 8 "setting"
+          step "Buildx" "" 8 "setting" Waiting
       in
         { model
           | code = ""
-          , steps = entryToAdd :: model.steps
+          , steps = Array.toList (Array.push entryToAdd (Array.fromList model.steps))
         }
 
-    CommitCode code -> 
+    CommitCode code ->
         { model
           | code = code
         }
