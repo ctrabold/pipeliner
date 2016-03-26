@@ -6,8 +6,12 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Signal exposing (Address)
 
+
 -- PORTS
-port currentCode: Signal String
+
+
+port currentCode : Signal String
+
 
 
 -- MODEL
@@ -55,29 +59,41 @@ initialModel =
   , description = "Example description"
   , code = ""
   , steps =
-      [ step "Build" "Copile & Unit tests" 1 "" Waiting
-      , step "Build" "Copile & Unit tests" 2 "setting" Waiting
-      , step "Package" "create artifact" 3 "cube" Waiting
-      , step "Deploy_DEV" "via SSH to DEV" 4 "send" Waiting
-      , step "Test_DEV" "Running automated UAT" 5 "unhide" Waiting
-      , step "Deploy_SIT" "Running automated UAT" 6 "warning" Waiting
+      [ step "Build" "Compile & Unit tests" 1 "" Waiting
+      , step "Deployment DEV" "via SSH to DEV" 2 "send" Waiting
+      , step "Testing DEV" "Running automated tests" 3 "unhide" Waiting
+      , step "Deployment SIT" "Running automated User Acceptance Tests" 4 "warning" Waiting
       ]
   }
+
 
 mapStatusToCss : Status -> String
 mapStatusToCss status =
   case status of
-    Waiting -> "disabled"
-    Running -> "active"
-    Failed -> "failed"
-    Success -> "completed"
+    Waiting ->
+      "disabled"
+
+    Running ->
+      "active"
+
+    Failed ->
+      "failed"
+
+    Success ->
+      "completed"
+
 
 mapStatusToIcon : Status -> String -> String
 mapStatusToIcon status icon =
   case status of
-    Running -> "setting loading"
-    Failed -> "red " ++ icon
-    _ -> icon
+    Running ->
+      "setting loading"
+
+    Failed ->
+      "red " ++ icon
+
+    _ ->
+      icon
 
 
 stepItem : Address Action -> Step -> Html
@@ -130,10 +146,13 @@ stepList address steps =
 sideBar : Bool -> Html
 sideBar pipelineRunning =
   let
-    buttonClass = 
+    buttonClass =
       case pipelineRunning of
-        True -> "ui button loading"
-        _ -> "ui green button inverted"
+        True ->
+          "ui button loading"
+
+        _ ->
+          "ui green button inverted"
   in
     div
       [ class "five wide column" ]
@@ -156,17 +175,22 @@ type Action
   | Remove
   | Sort
 
+
 startPipeline : String -> List Step -> List Step
-startPipeline code steps = 
+startPipeline code steps =
   case steps of
-    [] -> []
-    (s::steps) -> { code = code
-                  , status = Running
-                  , title = s.title
-                  , description = s.description
-                  , icon = s.icon
-                  , id = s.id
-                  }::steps
+    [] ->
+      []
+
+    s :: steps ->
+      { code = code
+      , status = Running
+      , title = s.title
+      , description = s.description
+      , icon = s.icon
+      , id = s.id
+      }
+        :: steps
 
 
 update action model =
@@ -188,10 +212,11 @@ update action model =
         currentId =
           List.maximum (List.map .id model.steps)
 
-        newId = (Maybe.withDefault 0 currentId) + 1
+        newId =
+          (Maybe.withDefault 0 currentId) + 1
 
         entryToAdd =
-          step ("Build" ++ (toString newId)) "" newId "setting" Waiting
+          step ("Job" ++ (toString newId)) "" newId "setting" Waiting
       in
         { model
           | code = ""
@@ -199,10 +224,10 @@ update action model =
         }
 
     CommitCode code ->
-        { model
-          | code = code
-          , steps = startPipeline code model.steps
-        }
+      { model
+        | code = code
+        , steps = startPipeline code model.steps
+      }
 
 
 
@@ -234,23 +259,25 @@ view address model =
     ]
 
 
+
 -- SIGNALS
+
 
 inbox : Signal.Mailbox Action
 inbox =
-    Signal.mailbox NoOp
+  Signal.mailbox NoOp
 
 
 actions : Signal Action
 actions =
-    Signal.merge inbox.signal (Signal.map CommitCode currentCode)
+  Signal.merge inbox.signal (Signal.map CommitCode currentCode)
 
 
 model : Signal Model
 model =
-    Signal.foldp update initialModel actions
+  Signal.foldp update initialModel actions
 
 
 main : Signal Html
 main =
-    Signal.map (view inbox.address) model
+  Signal.map (view inbox.address) model
