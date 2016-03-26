@@ -150,6 +150,18 @@ type Action
   | Remove
   | Sort
 
+startPipeline : String -> List Step -> List Step
+startPipeline code steps = 
+  case steps of
+    [] -> []
+    (s::steps) -> { code = code
+                  , status = Running
+                  , title = s.title
+                  , description = s.description
+                  , icon = s.icon
+                  , id = s.id
+                  }::steps
+
 
 update action model =
   case action of
@@ -183,6 +195,7 @@ update action model =
     CommitCode code ->
         { model
           | code = code
+          , steps = startPipeline code model.steps
         }
 
 
