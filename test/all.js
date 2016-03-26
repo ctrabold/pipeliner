@@ -4,7 +4,7 @@ casper.options.waitTimeout = 1000;
 
 casper.test.begin('Running tests...', function suite(test) {
   casper.start(url).then(function() {
-    test.assertSelectorHasText('h1.page-title', 'Hello Pipelines!');
+    test.assertSelectorHasText('h1.header', 'Hello Pipelines!');
   });
 
   casper.run(function() {
