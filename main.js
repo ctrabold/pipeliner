@@ -9,6 +9,8 @@ editor.getSession().setMode("ace/mode/javascript");
 
 document.getElementById("commit").addEventListener("click", function () {
   var currentCode = editor.getValue();
-  app.ports.currentCode.send(currentCode);
+  if (currentCode.trim()) {
+    app.ports.currentCode.send(currentCode);
+  }
 }, false);
 

@@ -55,9 +55,9 @@ initialModel =
   , description = "Example description"
   , code = ""
   , steps =
-      [ step "Build" "Copile & Unit tests" 1 "" Success
-      , step "Build" "Copile & Unit tests" 2 "setting" Running
-      , step "Package" "create artifact" 3 "cube" Failed
+      [ step "Build" "Copile & Unit tests" 1 "" Waiting
+      , step "Build" "Copile & Unit tests" 2 "setting" Waiting
+      , step "Package" "create artifact" 3 "cube" Waiting
       , step "Deploy_DEV" "via SSH to DEV" 4 "send" Waiting
       , step "Test_DEV" "Running automated UAT" 5 "unhide" Waiting
       , step "Deploy_SIT" "Running automated UAT" 6 "warning" Waiting
@@ -127,16 +127,22 @@ stepList address steps =
       ]
 
 
-sideBar : Html
-sideBar =
-  div
-    [ class "five wide column" ]
-    [ div
-        [ class "pipeline-sidebar" ]
-        [ div [ id "editor", class "pipeline-sidebar__editor" ] []
-        , button [ id "commit", class "ui green button inverted" ] [ text "Commit" ]
-        ]
-    ]
+sideBar : Bool -> Html
+sideBar pipelineRunning =
+  let
+    buttonClass = 
+      case pipelineRunning of
+        True -> "ui button loading"
+        _ -> "ui green button inverted"
+  in
+    div
+      [ class "five wide column" ]
+      [ div
+          [ class "pipeline-sidebar" ]
+          [ div [ id "editor", class "pipeline-sidebar__editor" ] []
+          , button [ id "commit", class buttonClass, disabled pipelineRunning ] [ text "Commit" ]
+          ]
+      ]
 
 
 
@@ -222,7 +228,7 @@ view address model =
     , hr [] []
     , div
         [ class "ui two column grid" ]
-        [ sideBar
+        [ sideBar (List.any (\s -> s.status == Running) model.steps)
         , stepList address model.steps
         ]
     ]
