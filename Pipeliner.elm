@@ -55,24 +55,42 @@ initialModel =
   , description = "Example description"
   , code = ""
   , steps =
-      [ step "Build" "Copile & Unit tests" 1 "completed" Success
-      , step "Build" "Copile & Unit tests" 1 "loading setting" Running
-      , step "Package" "create artifact" 2 "cube" Waiting
+      [ step "Build" "Copile & Unit tests" 1 "" Success
+      , step "Build" "Copile & Unit tests" 1 "setting" Running
+      , step "Package" "create artifact" 2 "cube" Failed
       , step "Deploy_DEV" "via SSH to DEV" 3 "send" Waiting
       , step "Test_DEV" "Running automated UAT" 4 "unhide" Waiting
-      , step "Deploy_SIT" "Running automated UAT" 4 "red warning" Failed
+      , step "Deploy_SIT" "Running automated UAT" 4 "warning" Waiting
       ]
   }
+
+mapStatusToCss : Status -> String
+mapStatusToCss status =
+  case status of
+    Waiting -> "disabled"
+    Running -> "active"
+    Failed -> "failed"
+    Success -> "completed"
+
+mapStatusToIcon : Status -> String -> String
+mapStatusToIcon status icon =
+  case status of
+    Running -> "setting loading"
+    Failed -> "red " ++ icon
+    _ -> icon
 
 
 stepItem : Address Action -> Step -> Html
 stepItem address entry =
   let
     icon =
-      entry.icon ++ " icon"
+      (mapStatusToIcon entry.status entry.icon) ++ " icon"
+
+    status =
+      (mapStatusToCss entry.status) ++ " step"
   in
     a
-      [ class "inactive step" ]
+      [ class status ]
       [ i [ class icon ] []
       , div
           [ class "content" ]
