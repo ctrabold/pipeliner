@@ -95,12 +95,16 @@ stepList address steps =
       List.map (stepItem address) steps
   in
     div
-      [ id "builds", class "pipeline-builds" ]
-      [ div [ class "ui large steps" ] stepItems
+      [ id "builds", class "nine wide column" ]
+      [ div [ class "ui tablet stackable large steps" ] stepItems
       , text " "
       , button
           [ class "circular ui icon button", onClick address Add ]
           [ i [ class "icon plus" ] []
+          ]
+      , button
+          [ class "circular ui icon button", onClick address Remove ]
+          [ i [ class "icon minus" ] []
           ]
       ]
 
@@ -108,9 +112,12 @@ stepList address steps =
 sideBar : Html
 sideBar =
   div
-    [ class "pipeline-sidebar" ]
-    [ div [ id "editor", class "pipeline-sidebar__editor" ] []
-    , button [ id "commit", class "ui green button inverted" ] [ text "Commit" ]
+    [ class "five wide column" ]
+    [ div
+        [ class "pipeline-sidebar" ]
+        [ div [ id "editor", class "pipeline-sidebar__editor" ] []
+        , button [ id "commit", class "ui green button inverted" ] [ text "Commit" ]
+        ]
     ]
 
 
@@ -184,7 +191,7 @@ view address model =
         ]
     , hr [] []
     , div
-        [ class "pipeline-container" ]
+        [ class "ui two column grid" ]
         [ sideBar
         , stepList address model.steps
         ]
