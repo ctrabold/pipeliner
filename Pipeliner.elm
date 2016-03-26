@@ -56,11 +56,11 @@ initialModel =
   , code = ""
   , steps =
       [ step "Build" "Copile & Unit tests" 1 "" Success
-      , step "Build" "Copile & Unit tests" 1 "setting" Running
-      , step "Package" "create artifact" 2 "cube" Failed
-      , step "Deploy_DEV" "via SSH to DEV" 3 "send" Waiting
-      , step "Test_DEV" "Running automated UAT" 4 "unhide" Waiting
-      , step "Deploy_SIT" "Running automated UAT" 4 "warning" Waiting
+      , step "Build" "Copile & Unit tests" 2 "setting" Running
+      , step "Package" "create artifact" 3 "cube" Failed
+      , step "Deploy_DEV" "via SSH to DEV" 4 "send" Waiting
+      , step "Test_DEV" "Running automated UAT" 5 "unhide" Waiting
+      , step "Deploy_SIT" "Running automated UAT" 6 "warning" Waiting
       ]
   }
 
@@ -170,11 +170,10 @@ update action model =
         currentId =
           List.maximum (List.map .id model.steps)
 
-        newId =
-          currentId
+        newId = (Maybe.withDefault 0 currentId) + 1
 
         entryToAdd =
-          step "Buildx" "" 8 "setting" Waiting
+          step ("Build" ++ (toString newId)) "" newId "setting" Waiting
       in
         { model
           | code = ""
