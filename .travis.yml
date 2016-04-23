@@ -23,6 +23,7 @@ after_success:
   - git config user.name "${USER}"
   - git config user.email "${USER}@${HOST}"
   - git branch -D gh-pages ||true
+  - git branch gh-pages
   - git checkout gh-pages
   - echo '!bundle.js' >> .gitignore
   - git add .
