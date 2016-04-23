@@ -14,6 +14,7 @@ It is single page application written in [Eml](http://elm-lang.org).
 
 # Installation
 
+    git clone https://github.com/ctrabold/pipeliner.git
     npm run setup
 
 # Build

@@ -71,52 +71,71 @@ mapStatusToCss : Status -> String
 mapStatusToCss status =
   case status of
     Waiting ->
-      "disabled"
+      "grey"
 
     Running ->
-      "active"
+      "yellow"
 
     Failed ->
-      "failed"
+      "red"
 
     Success ->
-      "completed"
+      "green"
 
 
 mapStatusToIcon : Status -> String -> String
 mapStatusToIcon status icon =
   case status of
     Running ->
-      "setting loading"
+      "setting loading icon"
 
     Failed ->
-      "red " ++ icon
+      "red warning icon"
 
     _ ->
-      icon
+      ""
 
 
 stepItem : Address Action -> Step -> Html
 stepItem address entry =
   let
     icon =
-      (mapStatusToIcon entry.status entry.icon) ++ " icon"
+      (mapStatusToIcon entry.status entry.icon)
 
     status =
-      (mapStatusToCss entry.status) ++ " step"
+      (mapStatusToCss entry.status) ++ " card"
   in
     a
       [ class status ]
-      [ i [ class icon ] []
-      , div
+      [ div
           [ class "content" ]
           [ div
-              [ class "title" ]
+              [ class "header" ]
               [ text ((toString entry.id) ++ " " ++ entry.title)
+              , i [ class icon ] []
+              ]
+          , div
+              [ class "meta" ]
+              [ span
+                  [ class "right floated time" ]
+                  [ text "Last build: 2 days ago"
+                  ]
+              , span
+                  [ class "category" ]
+                  [ text "Waiting"
+                  ]
               ]
           , div
               [ class "description" ]
-              [ text entry.description
+              [ p [] [ text entry.description ]
+              ]
+          , div
+              [ class "extra content" ]
+              [ text "Add description"
+              , div
+                  [ class "right floated author" ]
+                  [ text "Author"
+                  ]
               ]
           ]
       ]
@@ -130,7 +149,7 @@ stepList address steps =
   in
     div
       [ id "builds", class "nine wide column" ]
-      [ div [ class "ui tablet stackable large steps" ] stepItems
+      [ div [ class "ui four cards" ] stepItems
       , text " "
       , button
           [ class "circular ui icon button", onClick address Add ]
