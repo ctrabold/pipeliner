@@ -1,7 +1,6 @@
 module Pipeliner (..) where
 
 import Array exposing (..)
-import String exposing (join)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
@@ -154,6 +153,10 @@ stepItem address entry =
           , div
               [ class "description" ]
               [ p [] [ text entry.description ]
+              , a
+                  [ class "ui right corner label" ]
+                  [ i [ class "info icon" ] []
+                  ]
               ]
           , div
               [ class "extra content" ]
