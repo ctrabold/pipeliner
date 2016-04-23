@@ -14,9 +14,9 @@ install:
 
 before_script:
   - export PATH=$PWD/node_modules/.bin/:$PATH
-  - npm run build
 
 script:
+  - npm run build
   - elm reactor &
   - npm run test
 
