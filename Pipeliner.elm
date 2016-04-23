@@ -193,6 +193,7 @@ startPipeline code steps =
         :: steps
 
 
+update : Action -> Model -> Model
 update action model =
   case action of
     NoOp ->
