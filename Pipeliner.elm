@@ -1,21 +1,36 @@
 module Pipeliner (..) where
 
 import Array exposing (..)
+import String exposing (join)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Signal exposing (Address)
-
+import Json.Decode exposing (Decoder, decodeValue, object5, (:=), int, string, list, maybe)
 
 -- PORTS
-
-
-port currentCode : Signal String
-
-
+port currentCode: Signal (String, Json.Decode.Value)
 
 -- MODEL
 
+type alias Annotation =
+  { row: Int
+  , column: Maybe Int
+  , errorType: String
+  , raw: String
+  , text: String
+  }
+
+annotationsDecoder : Decoder (List Annotation)
+annotationsDecoder =
+      Json.Decode.list 
+        (object5 Annotation
+          ("row" := int)
+          (maybe ("column" := int))
+          ("errorType" := string)
+          ("raw" := string)
+          ("text" := string)
+        )
 
 type Status
   = Running
@@ -49,6 +64,7 @@ type alias Model =
   { title : String
   , description : String
   , code : String
+  , annotations: List Annotation
   , steps : List Step
   }
 
@@ -58,6 +74,7 @@ initialModel =
   { title = "Hello Pipelines!"
   , description = "Example description"
   , code = ""
+  , annotations = []
   , steps =
       [ step "Build" "Compile & Unit tests" 1 "" Waiting
       , step "Deployment DEV" "via SSH to DEV" 2 "send" Waiting
@@ -65,7 +82,6 @@ initialModel =
       , step "Deployment SIT" "Running automated User Acceptance Tests" 4 "warning" Waiting
       ]
   }
-
 
 mapStatusToCss : Status -> String
 mapStatusToCss status =
@@ -190,7 +206,7 @@ sideBar pipelineRunning =
 type Action
   = NoOp
   | Add
-  | CommitCode String
+  | CommitCode (String, Json.Decode.Value)
   | Remove
   | Sort
 
@@ -243,11 +259,12 @@ update action model =
           , steps = Array.toList (Array.push entryToAdd (Array.fromList model.steps))
         }
 
-    CommitCode code ->
-      { model
-        | code = code
-        , steps = startPipeline code model.steps
-      }
+    CommitCode (code, annotationsJson) ->
+        { model
+          | code = code
+          , annotations = Result.withDefault [] (decodeValue annotationsDecoder annotationsJson)
+          , steps = startPipeline code model.steps
+        }
 
 
 
