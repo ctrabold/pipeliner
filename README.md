@@ -14,9 +14,7 @@ It is single page application written in [Eml](http://elm-lang.org).
 
 # Installation
 
-    npm install -g elm@0.16.0 http-server
-    npm install
-    elm package install
+    npm run setup
 
 # Build
 

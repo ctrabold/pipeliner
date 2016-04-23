@@ -11,6 +11,8 @@
     "casperjs": "1.1.0-beta5"
   },
   "scripts": {
+    "setup": "npm install -g elm@0.16.0 http-server && npm install && elm package install",
+    "start": "elm reactor && npm run watch",
     "test": "./node_modules/.bin/casperjs test test/all.js",
     "build": "./node_modules/.bin/webpack",
     "watch": "./node_modules/.bin/webpack --progress --colors --watch"
