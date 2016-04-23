@@ -12,9 +12,11 @@ install:
   - npm install
   - elm-package install --yes
 
+before_script:
+  - elm reactor &
+
 script:
   - npm run build
-  - elm reactor &
   - npm run test
 
 after_success:
@@ -29,8 +31,6 @@ after_success:
   - git push --force --quiet "https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git" gh-pages > /dev/null 2>&1
 
 env:
-env:
   global:
-    - NO_WATCH_TESTS=1
     - PATH=$PWD/node_modules/.bin/:$PATH
     - secure: L65RCz+SR3LiBPBS/X48AjXia7sGVL6DyYa9LvCCpRbjCWTiGMuQzr9kX0O5Iig7kVS43wjwfPCQvIL7tt/VorRG3R0Qy2UrTghB7tdShOEMbjT8g9WDJ4EwSXFcnTKVKUXBW3A4LXWHU/4Fiqfx4DNxiftMycNeZNyEaimRbpw9lg6kY9loLymQSIcZ5JqZFhvkMXi5r2NFIpAk6us/oIVgz/SkZ+r5oUaGHN8CBI1IUKDrFFDZPBv//HASbxtXHDGemQU8SfPTWitoObNBLQIo5MgTpk0lti9UlZ39YsErg5Pvnld59xiro/oOOOmzD2U/nFOMbJ5dfqE2V1suC72cyTUbeTom6YnaTtn+tgcn4KydNEPH9fd6o6JJOGMwDAolu9gU0nu2lRKxSG2xyA92za8dgelB7CeT9MBUENerb6wjj2N/GXZhY2evbRIToBPt3DjmeRBIRKik85K8sJ+0UKt8fHUrZHEGNX1QvqAihyPzCVk3HupbUQ1rbvQMGdA9JsC0a8g5MWkyCCQ1qAier+1kuNEQ72Gn8nY09zXebM3aMf2bcwAKYmBy8Lv7AgvhBPbHtpHOy20w67rsxnGRfrelrBnwQc1p0Y+zhIGoXgGoEanh9/GPmQtokDMim0p877B//ZX6R5/mAoEAS2mxeIbqKalyl9zIFF4GELk=
