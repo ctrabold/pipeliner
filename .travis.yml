@@ -22,10 +22,10 @@ script: npm run test
 after_success:
   - git config user.name "${USER}"
   - git config user.email "${USER}@${HOST}"
-  - git branch -D gh-pages ||true
-  - git branch gh-pages
+  - git branch --force gh-pages
   - git checkout gh-pages
   - echo '!bundle.js' >> .gitignore
+  - npm run build
   - git add .
   - git commit -m "Deploy to GitHub Pages"
   - git push --force --quiet "https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}" master:gh-pages > /dev/null 2>&1
