@@ -112,7 +112,7 @@ stepItem address entry =
           [ class "content" ]
           [ div
               [ class "title" ]
-              [ text entry.title
+              [ text ((toString entry.id) ++ " " ++ entry.title)
               ]
           , div
               [ class "description" ]
