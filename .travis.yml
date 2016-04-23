@@ -12,12 +12,10 @@ install:
   - npm install
   - elm-package install --yes
 
-before_script:
-  - elm reactor &
-
 script:
-  - npm run test
-#  - npm run build
+  - npm run build
+#  - elm reactor &
+#  - npm run test
 
 after_success:
   - git config user.name "${USER}"
