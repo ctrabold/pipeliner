@@ -15,7 +15,7 @@
     "setup": "npm install -g elm@0.16.0 && npm install && elm package install",
     "start": "elm reactor && npm run watch",
     "test": "./node_modules/.bin/casperjs test test/all.js",
-    "build": "./node_modules/.bin/webpack -d",
+    "build": "./node_modules/.bin/webpack --progress --colors",
     "watch": "./node_modules/.bin/webpack --progress --colors --watch"
   },
   "repository": {
