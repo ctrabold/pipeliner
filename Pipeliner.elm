@@ -148,8 +148,8 @@ stepList address steps =
       List.map (stepItem address) steps
   in
     div
-      [ id "builds", class "nine wide column" ]
-      [ div [ class "ui four cards" ] stepItems
+      [ id "builds", class "eleven wide column" ]
+      [ div [ class "ui three cards" ] stepItems
       , text " "
       , button
           [ class "circular ui icon button", onClick address Add ]
@@ -272,9 +272,12 @@ view address model =
         ]
     , hr [] []
     , div
-        [ class "ui two column grid" ]
-        [ sideBar (List.any (\s -> s.status == Running) model.steps)
-        , stepList address model.steps
+        [ class "ui two column divided grid" ]
+        [ div
+            [ class "row" ]
+            [ sideBar (List.any (\s -> s.status == Running) model.steps)
+            , stepList address model.steps
+            ]
         ]
     ]
 
