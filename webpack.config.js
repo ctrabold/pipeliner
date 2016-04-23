@@ -1,3 +1,5 @@
+var path = require("path");
+
 module.exports = {
   entry: "./main.js",
   output: {
@@ -10,6 +12,9 @@ module.exports = {
       exclude: [
         /elm-stuff/,
         /node_modules/
+      ],
+      include: [
+        path.resolve(__dirname, "./Pipeliner.elm"),
       ],
       loader: "elm-webpack"
     }],
