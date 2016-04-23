@@ -1,23 +1,26 @@
-var path = require("path")
+var path = require("path");
 
 module.exports = {
-  entry: "./main.js",
-  output: {
-    path: "./assets/javascripts",
-    filename: "bundle.js"
+  entry: {
+    bundle: [
+      './main.js'
+    ]
   },
+
+  output: {
+    path: path.resolve(__dirname + '/assets/javascripts'),
+    filename: '[name].js',
+  },
+
   module: {
     loaders: [
       {
-        test: /\.elm$/,
-        loader: "elm-webpack",
-        include: path.join(__dirname, "Pipeliner.elm"),
-        exclude: [
-          /elm-stuff/,
-          /node_modules/
-        ]
-      }
+        test:    /\.elm$/,
+        exclude: [/elm-stuff/, /node_modules/],
+        loader:  'elm-webpack',
+      },
     ],
-    noParse: [/.elm$/]
-  }
-}
+
+    noParse: /\.elm$/,
+  },
+};
