@@ -11,9 +11,6 @@ module.exports = {
         /elm-stuff/,
         /node_modules/
       ],
-      include: [
-        "./Pipeliner.elm"
-      ],
       loader: "elm-webpack"
     }],
     noParse: [/.elm$/]
