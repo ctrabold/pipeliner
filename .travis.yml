@@ -15,10 +15,9 @@ install:
 before_script:
   - export PATH=$PWD/node_modules/.bin/:$PATH
   - npm run build
-
-script:
   - elm reactor &
-  - npm run test
+
+script: npm run test
 
 after_success:
   - git config user.name "${USER}"
