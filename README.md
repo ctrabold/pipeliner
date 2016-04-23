@@ -6,9 +6,11 @@ This browser application helps you to visualize pipelines.
 
 It is single page application written in [Eml](http://elm-lang.org).
 
+[![Build Status](https://travis-ci.org/ctrabold/pipeliner.svg?branch=master)](https://travis-ci.org/ctrabold/pipeliner)
 
 # Requirements
 
+- homebrew 0.9+: [install](http://brew.sh/)
 - nodejs 5.5+: `brew install node`
 
 
