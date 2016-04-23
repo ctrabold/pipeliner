@@ -14,7 +14,7 @@ module.exports = {
         /node_modules/
       ],
       include: [
-        path.resolve(__dirname, "./Pipeliner.elm"),
+        path.resolve(__dirname, "/Pipeliner.elm"),
       ],
       loader: "elm-webpack"
     }],
