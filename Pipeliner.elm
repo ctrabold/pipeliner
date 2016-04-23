@@ -8,29 +8,38 @@ import Html.Events exposing (onClick)
 import Signal exposing (Address)
 import Json.Decode exposing (Decoder, decodeValue, object5, (:=), int, string, list, maybe)
 
+
 -- PORTS
-port currentCode: Signal (String, Json.Decode.Value)
+
+
+port currentCode : Signal ( String, Json.Decode.Value )
+
+
 
 -- MODEL
 
+
 type alias Annotation =
-  { row: Int
-  , column: Maybe Int
-  , errorType: String
-  , raw: String
-  , text: String
+  { row : Int
+  , column : Maybe Int
+  , errorType : String
+  , raw : String
+  , text : String
   }
+
 
 annotationsDecoder : Decoder (List Annotation)
 annotationsDecoder =
-      Json.Decode.list 
-        (object5 Annotation
-          ("row" := int)
-          (maybe ("column" := int))
-          ("errorType" := string)
-          ("raw" := string)
-          ("text" := string)
-        )
+  Json.Decode.list
+    (object5
+      Annotation
+      ("row" := int)
+      (maybe ("column" := int))
+      ("errorType" := string)
+      ("raw" := string)
+      ("text" := string)
+    )
+
 
 type Status
   = Running
@@ -64,7 +73,7 @@ type alias Model =
   { title : String
   , description : String
   , code : String
-  , annotations: List Annotation
+  , annotations : List Annotation
   , steps : List Step
   }
 
@@ -82,6 +91,7 @@ initialModel =
       , step "Deployment SIT" "Running automated User Acceptance Tests" 4 "warning" Waiting
       ]
   }
+
 
 mapStatusToCss : Status -> String
 mapStatusToCss status =
@@ -206,7 +216,7 @@ sideBar pipelineRunning =
 type Action
   = NoOp
   | Add
-  | CommitCode (String, Json.Decode.Value)
+  | CommitCode ( String, Json.Decode.Value )
   | Remove
   | Sort
 
@@ -259,12 +269,12 @@ update action model =
           , steps = Array.toList (Array.push entryToAdd (Array.fromList model.steps))
         }
 
-    CommitCode (code, annotationsJson) ->
-        { model
-          | code = code
-          , annotations = Result.withDefault [] (decodeValue annotationsDecoder annotationsJson)
-          , steps = startPipeline code model.steps
-        }
+    CommitCode ( code, annotationsJson ) ->
+      { model
+        | code = code
+        , annotations = Result.withDefault [] (decodeValue annotationsDecoder annotationsJson)
+        , steps = startPipeline code model.steps
+      }
 
 
 
