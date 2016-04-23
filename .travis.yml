@@ -16,8 +16,8 @@ before_script:
   - elm reactor &
 
 script:
-  - npm run build
   - npm run test
+#  - npm run build
 
 after_success:
   - git config user.name "${USER}"
