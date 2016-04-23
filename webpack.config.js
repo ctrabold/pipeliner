@@ -7,6 +7,9 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.elm$/,
+      include: [
+        "./Pipeliner.elm"
+      ],
       loader: "elm-webpack"
     }],
     noParse: [/.elm$/]
