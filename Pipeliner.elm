@@ -303,10 +303,10 @@ view address model =
         [ class "ui header" ]
         [ i [ class "settings icon" ] []
         , div
-            [ class "content" ]
+            [ class "content", contenteditable True ]
             [ text model.title
             , div
-                [ class "sub header" ]
+                [ class "sub header", contenteditable True ]
                 [ text model.description
                 ]
             ]
