@@ -135,7 +135,7 @@ stepItem address entry =
       [ div
           [ class "content" ]
           [ div
-              [ class "header" ]
+              [ class "header", contenteditable True ]
               [ text ((toString entry.id) ++ " " ++ entry.title)
               , i [ class icon ] []
               ]
@@ -151,7 +151,7 @@ stepItem address entry =
                   ]
               ]
           , div
-              [ class "description" ]
+              [ class "description", contenteditable True ]
               [ p [] [ text entry.description ]
               , a
                   [ class "ui right corner label" ]
@@ -159,7 +159,7 @@ stepItem address entry =
                   ]
               ]
           , div
-              [ class "extra content" ]
+              [ class "extra content", contenteditable True ]
               [ text "Add description"
               , div
                   [ class "right floated author" ]
