@@ -212,6 +212,17 @@ sideBar pipelineRunning =
       ]
 
 
+statusLog: Html
+statusLog =
+  div [ class "ui info message" ]
+        [ div [ class "header"]
+              [ text "Info Log Output"]
+        , ul [ class "list" ]
+             [ li [] [ text "it's good"]
+             , li [] [ text "it's better"]
+             ]
+        ]
+
 
 -- UPDATE
 
@@ -308,6 +319,40 @@ view address model =
             [ sideBar (List.any (\s -> s.status == Running) model.steps)
             , stepList address model.steps
             ]
+        ]
+    , div
+        [ class "ui top attached tabular menu" ]
+        [ a [ class "item", attribute "data-tab" "first" ]
+              [ text "System Log" ]
+        , a [ class "item", attribute "data-tab" "second" ]
+              [ text "Build log" ]
+        , a [ class "item active", attribute "data-tab" "third" ]
+              [ text "Site Preview" ]
+        ]
+    , div
+        [ class "ui bottom attached tab segment", attribute "data-tab" "first" ]
+        [ pre []
+          [ text "[INFO] Pipeline up and running."
+          , br [] []
+          , text "[INFO] Jobs waiting for action."
+          , br [] []
+          , text "[INFO] Code commited to Build."
+          ]
+        ]
+    , div
+        [ class "ui bottom attached tab segment", attribute "data-tab" "second" ]
+        [ pre []
+          [ text "[INFO] Waiting."
+          ]
+        ]
+    , div
+        [ class "ui bottom attached tab segment active", attribute "data-tab" "third" ]
+        [ iframe
+          [ style [ ("backgroundColor", "red")
+    , ("height", "190px")
+    , ("width", "100%")
+    ] , srcdoc "<div>Website preview inside iframe</div><h1>No code has been deployed yet. Keep it coming!</h1>" ]
+          []
         ]
     ]
 

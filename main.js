@@ -31,3 +31,6 @@ document.getElementById("commit").addEventListener("click", function () {
   }
 }, false);
 
+$(document).ready(function(){
+    $('.menu .item').tab();
+});
