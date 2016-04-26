@@ -7,6 +7,11 @@ branches:
   only:
     - master
 
+cache:
+  directories:
+    - $HOME/elm-stuff
+    - $HOME/node_modules
+
 install:
   - npm install -g elm@0.16.0
   - npm install
